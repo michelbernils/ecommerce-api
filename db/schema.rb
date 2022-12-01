@@ -16,14 +16,14 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_24_215805) do
     t.string "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "wishlist_id"
-    t.index ["wishlist_id"], name: "index_clients_on_wishlist_id"
   end
 
   create_table "wishlists", force: :cascade do |t|
-    t.integer "product"
+    t.string "products"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "client_id"
+    t.index ["client_id"], name: "index_wishlists_on_client_id"
   end
 
 end

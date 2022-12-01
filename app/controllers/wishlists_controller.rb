@@ -1,4 +1,4 @@
-class WishlistsController < ApplicationController
+class WishlistsController <  ApplicationController
   before_action :set_wishlist, only: [:show, :update, :destroy]
 
   def index
@@ -14,8 +14,12 @@ class WishlistsController < ApplicationController
   def create
     @wishlist = Wishlist.new(wishlist_params)
 
-    @wishlist.save
-    render json: @wishlist, status: :created
+    if @wishlist.save
+      render json: @wishlist, status: :created, location: @wishlist
+    else
+      render json: @wishlist.errors, status: :unprocessable_entity
+    end
+
   end
 
   def update
@@ -35,6 +39,6 @@ class WishlistsController < ApplicationController
   private
 
   def wishlist_params
-    params.require(:wishlist).permit(:product)
+    params.require(:wishlist).permit(:product, :client_id)
   end
 end

@@ -1,4 +1,4 @@
-class ClientsController < ActionController::Base 
+class ClientsController <  ApplicationController
   before_action :set_client, only: [:show, :update, :destroy ]
 
   def index
@@ -14,8 +14,11 @@ class ClientsController < ActionController::Base
   def create
     @client = Client.new(client_params)
 
-    @client.save
-    render json: @client, status: :created
+    if @client.save
+      render json: @client, status: :created, location: @client
+    else
+      render json: @client.errors, status: :unprocessable_entity
+    end
   end
 
   def update
@@ -35,6 +38,6 @@ class ClientsController < ActionController::Base
   private
 
   def client_params
-    params.require(:client).permit(:name, :email, :wishlist_id)
+    params.require(:client).permit(:name, :email)
   end
 end

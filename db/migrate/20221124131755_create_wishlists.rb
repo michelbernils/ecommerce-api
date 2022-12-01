@@ -1,7 +1,7 @@
 class CreateWishlists < ActiveRecord::Migration[7.0]
   def change
     create_table :wishlists do |t|
-      t.integer :product
+      t.string 'products', array: true
 
       t.timestamps
     end
