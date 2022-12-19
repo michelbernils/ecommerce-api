@@ -30,15 +30,19 @@ class WishlistsController <  ApplicationController
     end
   end
 
-  def delete
+  def destroy
     @wishlist.destroy
 
-    render json: @wishlist, status: :deleted
+    render json: @wishlist, status: :ok
   end
 
   private
 
+  def set_wishlist
+    @wishlist = Wishlist.find(params[:id])
+  end
+  
   def wishlist_params
-    params.require(:wishlist).permit(:product, :client_id)
+    params.require(:wishlist).permit(:client_id, :products => [])
   end
 end

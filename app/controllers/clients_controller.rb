@@ -1,10 +1,12 @@
+require_relative '../clients/wishlist_client.rb'
+
 class ClientsController <  ApplicationController
   before_action :set_client, only: [:show, :update, :destroy ]
 
   def index
-    @client = Client.all
+    @clients = Client.all
 
-    render json: @client, status: :ok
+    render json: @clients
   end
 
   def show
@@ -29,15 +31,19 @@ class ClientsController <  ApplicationController
     end
   end
 
-  def delete
+  def destroy
     @client.destroy
 
-    render json: @client, status: :deleted
+    render json: @client, status: :ok
   end
 
   private
 
+  def set_client
+    @client = Client.find(params[:id])
+  end
+
   def client_params
-    params.require(:client).permit(:name, :email)
+    params.require(:client).permit(:name, :email, wishlist_attributes: [:client_id, :products])
   end
 end
