@@ -6,15 +6,15 @@ e-mail (done)
 - Um cliente não pode se registrar duas vezes com o mesmo endereço
 de e-mail (done)
 
-- Cada cliente só deverá ter uma única lista de produtos favoritos 
+- Cada cliente só deverá ter uma única lista de produtos favoritos (done)
 
 - Em uma lista de produtos favoritos podem existir uma quantidade ilimitada
 de produtos (done)
 
-- Um produto não pode ser adicionado em uma lista caso ele não exista
+- Um produto não pode ser adicionado em uma lista caso ele não exista (done)
 
 - Um produto não pode estar duplicado na lista de produtos favoritos de
-um cliente
+um cliente (done)
 
 - A documentação da API de produtos pode ser visualizada neste link
 
@@ -25,6 +25,15 @@ será exibido por este dispositivo. Não é necessário criar um frontend para
 simular essa renderização (foque no desenvolvimento da API).
 
 - O acesso à api deve ser aberto ao mundo, porém deve possuir autenticação
-e autorização.
+e autorização. (working)
+
+Cliente:
+ - email único
+ - somente 1 wishlist por cliente
+
+Wishlist:
+  - não pode ter produto duplicado na wishlist
+  - 
+
 
 

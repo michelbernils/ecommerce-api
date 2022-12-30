@@ -1,5 +1,8 @@
-class WishlistsController <  ApplicationController
-  before_action :set_wishlist, only: [:show, :update, :destroy]
+# frozen_string_literal: true
+
+# Wishlist controller class
+class WishlistsController < ApplicationController
+  before_action :set_wishlist, only: %i[show update destroy]
 
   def index
     @wishlist = Wishlist.all
@@ -13,13 +16,11 @@ class WishlistsController <  ApplicationController
 
   def create
     @wishlist = Wishlist.new(wishlist_params)
-
     if @wishlist.save
       render json: @wishlist, status: :created, location: @wishlist
     else
       render json: @wishlist.errors, status: :unprocessable_entity
     end
-
   end
 
   def update
@@ -41,8 +42,8 @@ class WishlistsController <  ApplicationController
   def set_wishlist
     @wishlist = Wishlist.find(params[:id])
   end
-  
+
   def wishlist_params
-    params.require(:wishlist).permit(:client_id, :products => [])
+    params.require(:wishlist).permit(:client_id, products: [])
   end
 end

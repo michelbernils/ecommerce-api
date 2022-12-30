@@ -1,12 +1,20 @@
-require_relative '../clients/wishlist_client.rb'
+# frozen_string_literal: true
 
-class ClientsController <  ApplicationController
-  before_action :set_client, only: [:show, :update, :destroy ]
+require_relative '../clients/wishlist_client'
+require 'byebug'
+
+# Client Controller class
+class ClientsController < ApplicationController
+  before_action :set_client, only: %i[show update destroy]
 
   def index
     @clients = Client.all
 
-    render json: @clients
+    if @clients
+      render json: @clients
+    else
+      render json: @clients.errors, status: :unprocessable_entity
+    end
   end
 
   def show
@@ -44,6 +52,6 @@ class ClientsController <  ApplicationController
   end
 
   def client_params
-    params.require(:client).permit(:name, :email, wishlist_attributes: [:client_id, :products])
+    params.require(:client).permit(:name, :email)
   end
 end

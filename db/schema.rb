@@ -11,19 +11,18 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.0].define(version: 2022_11_24_215805) do
-  create_table "clients", force: :cascade do |t|
-    t.string "name"
-    t.string "email"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+  create_table 'clients', force: :cascade do |t|
+    t.string 'name'
+    t.string 'email'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
   end
 
-  create_table "wishlists", force: :cascade do |t|
-    t.string "products"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "client_id"
-    t.index ["client_id"], name: "index_wishlists_on_client_id"
+  create_table 'wishlists', force: :cascade do |t|
+    t.string 'products'
+    t.datetime 'created_at', null: false
+    t.datetime 'updated_at', null: false
+    t.integer 'client_id'
+    t.index ['client_id'], name: 'index_wishlists_on_client_id'
   end
-
 end
