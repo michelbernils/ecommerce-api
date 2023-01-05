@@ -24,23 +24,23 @@ class WishlistsController < ApplicationController
   end
 
   def update
-    if @wishlist.update(wishlist_params)
-      render json: @wishlist
-    else
-      render json: @wishlist.errors, status: :unprocessable_entity
+    if @wishlist.present?
+      @wishlist.update(wishlist_params)
+      render json: @wishlist, status: :ok
     end
   end
 
   def destroy
-    @wishlist.destroy
-
-    render json: @wishlist, status: :ok
+    if @wishlist.present?
+      @wishlist.destroy
+      render json: @wishlist, status: :ok
+    end
   end
 
   private
 
   def set_wishlist
-    @wishlist = Wishlist.find(params[:id])
+    @wishlist = Wishlist.find_by(id: params[:id])
   end
 
   def wishlist_params

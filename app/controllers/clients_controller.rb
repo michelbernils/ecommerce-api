@@ -32,23 +32,23 @@ class ClientsController < ApplicationController
   end
 
   def update
-    if @client.update(client_params)
-      render json: @client
-    else
-      render json: @client.errors, status: :unprocessable_entity
+    if @client.present?
+      @client.update(client_params)
+      render json: @client, status: :ok
     end
   end
 
   def destroy
-    @client.destroy
-
-    render json: @client, status: :ok
+    if @client.present?
+      @client.destroy
+      render json: @client, status: :ok
+    end
   end
 
   private
 
   def set_client
-    @client = Client.find(params[:id])
+    @client = Client.find_by(id: params[:id])
   end
 
   def client_params

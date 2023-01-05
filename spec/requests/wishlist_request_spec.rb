@@ -10,13 +10,6 @@ RSpec.describe 'Test wishlist requests', type: :request do
 
       expect(response).to have_http_status(200)
     end
-
-    # Unable to force a 406 error
-    # it '406' do
-    #   headers = { "Content-Type" => "nil"}
-    #   get '/clients', :params => nil, :headers => {"HTTP" => "nil"}
-    #   expect(response).to have_http_status(406)
-    # end
   end
 
   context 'get /wishlist/:id' do
@@ -28,13 +21,6 @@ RSpec.describe 'Test wishlist requests', type: :request do
 
       expect(response).to have_http_status(200)
     end
-
-    # Unable to force a 406 error
-    # it '406' do
-    #   headers = { "Content-Type" => "nil"}
-    #   get '/clients', :params => nil, :headers => {"HTTP" => "nil"}
-    #   expect(response).to have_http_status(406)
-    # end
   end
 
   context 'post /wishlist/:id' do
@@ -49,16 +35,14 @@ RSpec.describe 'Test wishlist requests', type: :request do
       expect(wishlist[:products]).to eq(%w[1 2 3 4])
     end
 
-    # Unable to force a 406 error
-    # it '406' do
-    #   headers = { "Content-Type" => "nil"}
-    #   get '/clients', :params => nil, :headers => {"HTTP" => "nil"}
-    #   expect(response).to have_http_status(406)
-    # end
+    it 'Parameters Missing' do
+      headers = { 'Content-Type': 'application/json' }
+      expect { post '/wishlists/', params: {}, headers: headers }.to raise_error(ActionController::ParameterMissing)
+    end
   end
 
   context 'put /wishlist/:id' do
-    it '200 OK' do
+    it '200' do
       headers = { 'Content-Type' => 'application/json' }
       client = Client.create!(id: 1, name: 'michel', email: 'xpto')
       wishlist = Wishlist.create!(client_id: 1, products: %w[1 2 3 4])
@@ -71,16 +55,17 @@ RSpec.describe 'Test wishlist requests', type: :request do
       expect(wishlist_update[:products]).to eq(%w[1 2 3 4 5])
     end
 
-    # Unable to force a 406 error
-    # it '406' do
-    #   headers = { "Content-Type" => "nil"}
-    #   get '/clients', :params => nil, :headers => {"HTTP" => "nil"}
-    #   expect(response).to have_http_status(406)
-    # end
+    it '204' do
+      headers = { 'Content-Type' => 'application/json' }
+      wishlist_update = { 'products': %w[1 2 3 4 5] }
+      put '/wishlists/1', params: {}.to_json, headers: {}
+
+      expect(response).to have_http_status(204)
+    end
   end
 
   context 'delete /wishlist/:id' do
-    it '200 OK' do
+    it '200' do
       headers = { 'Content-Type': 'application/json' }
       client = Client.create!(id: 1, name: 'michel', email: 'xpto')
       wishlist = Wishlist.create!(client_id: 1, products: %w[1 2 3 4])
@@ -89,12 +74,10 @@ RSpec.describe 'Test wishlist requests', type: :request do
       expect(response).to have_http_status(200)
     end
 
-    it '404 error' do
-      # headers = { 'Content-Type': 'application/json' }
-      # delete '/wishlist/1', params: {}, headers: headers
-
-      # expect(response).to raise_error(ActiveRecord::RecordNotFound)
-      # expect(response.status).to have_http_status(404)
+    it '204' do
+      headers = { 'Content-Type': 'application/json' }
+      delete '/wishlists/1', params: {}, headers: headers
+      expect(response).to have_http_status(204)
     end
   end
 end
