@@ -19,6 +19,8 @@ RSpec.describe 'Test clients requests', type: :request do
       get "/clients/#{client.id}", params: {}, headers: headers
 
       expect(response).to have_http_status(200)
+      expect(response.parsed_body['client']['name']).to eq('michel')
+      expect(response.parsed_body['client']['email']).to eq('xpto')
     end
   end
 
