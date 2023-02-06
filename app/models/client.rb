@@ -3,6 +3,7 @@
 # Client model
 class Client < ApplicationRecord
   before_save :downcase_email
+  after_create :welcome_mail
 
   validates_uniqueness_of :email, case_sensitive: false
   has_one :wishlist
@@ -20,5 +21,25 @@ class Client < ApplicationRecord
 
   def downcase_email
     self.email = email.downcase
+  end
+
+  Mail.defaults do
+    delivery_method :smtp, address: "localhost", port: 1025
+  end
+
+  def welcome_mail
+    email = self.email
+    name = self.name
+    template = ERB.new(File.read('app/views/registration_mailer/welcome_mail.erb')).result(binding)
+
+    mail = Mail.deliver do
+      from 'support@magamike.com'
+      to email
+      subject 'Welcome to Magamike'
+      content_type 'text/html; charset=UTF-8'
+      body template
+    end
+
+    mail.deliver!
   end
 end
