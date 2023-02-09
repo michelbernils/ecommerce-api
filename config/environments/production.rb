@@ -86,8 +86,4 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
-
-  Mail.defaults do
-    delivery_method :smtp, address: "localhost", port: 1025
-  end
 end
