@@ -1,4 +1,7 @@
-require "active_support/core_ext/integer/time"
+# frozen_string_literal: true
+
+require 'active_support/core_ext/integer/time'
+require 'mail'
 
 # The test environment is used exclusively to run your application's
 # test suite. You never need to work with it otherwise. Remember that
@@ -57,4 +60,11 @@ Rails.application.configure do
 
   # Annotate rendered view with file names.
   # config.action_view.annotate_rendered_view_with_filenames = true
+  # Mail.defaults do
+  #   delivery_method :test # in practice you'd do this in spec_helper.rb
+  # end
+
+  Mail.defaults do
+    delivery_method :test
+  end
 end

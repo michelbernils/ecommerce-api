@@ -47,6 +47,8 @@ group :development, :test do
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
   # Run against this stable release
   gem 'rspec-rails', '~> 6.0.0'
+  # pretty print Ruby objects to visualize their structure. Supports custom object formatting via plugins
+  gem 'awesome_print', '~> 1.8'
 end
 
 group :test do
@@ -57,4 +59,3 @@ group :development do
   # Speed up commands on slow machines / big apps [https://github.com/rails/spring]
   # gem "spring"
 end
-

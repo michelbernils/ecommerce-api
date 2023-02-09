@@ -11,15 +11,15 @@ context 'Client Requirementes' do
     it { should validate_uniqueness_of(:email).case_insensitive }
   end
 
-  describe 'Should send a notify mail to client' do
-    subject { Client.new(name: 'treino', email: 'treino') }
-    include Mail::Matchers
-    Mail::TestMailer.deliveries.clear
-    
-    it { is_expected.to have_sent_email } # passes if any email at all was sentz
+  describe 'send email' do
+    it 'welcome_mail to send after creating a user' do
+      client = Client.create!(name: 'mike', email: 'xp')
+      expect(client).to receive(:welcome_mail)
+      client.run_callbacks(:create)
+    end
   end
 
-  describe 'Should only have one Wishlist' do  
+  describe 'Should only have one Wishlist' do
     subject { Client.new(name: 'john doe', email: 'john.doe@gmail.com') }
     it { should have_one(:wishlist).class_name('Wishlist') }
   end

@@ -23,10 +23,6 @@ class Client < ApplicationRecord
     self.email = email.downcase
   end
 
-  Mail.defaults do
-    delivery_method :smtp, address: "localhost", port: 1025
-  end
-
   def welcome_mail
     email = self.email
     name = self.name
@@ -39,7 +35,5 @@ class Client < ApplicationRecord
       content_type 'text/html; charset=UTF-8'
       body template
     end
-
-    mail.deliver!
   end
 end
