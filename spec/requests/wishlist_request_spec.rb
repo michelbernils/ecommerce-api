@@ -14,7 +14,7 @@ RSpec.describe 'Test wishlist requests', type: :request do
 
   context 'get /wishlist/:id' do
     it '200 OK' do
-      client = Client.create!(id: 1, name: 'michel', email: 'xpto')
+      client = Client.create!(id: 1, name: 'michel', email: 'xpto', password_digest: '1234')
       wishlist = Wishlist.create!(client_id: 1, products: [1, 2, 3, 4])
       headers = { 'Content-Type' => 'application/json' }
       get "/wishlists/#{wishlist.id}", params: {}, headers: headers
@@ -26,7 +26,7 @@ RSpec.describe 'Test wishlist requests', type: :request do
   context 'post /wishlist/:id' do
     it '200 OK' do
       headers = { 'Content-Type' => 'application/json' }
-      client = Client.create!(id: 1, name: 'michel', email: 'xpto')
+      client = Client.create!(id: 1, name: 'michel', email: 'xpto', password_digest: '1234')
       wishlist = { 'client_id': 1, 'products': %w[1 2 3 4] }
       post '/wishlists/', params: wishlist.to_json, headers: headers
 
@@ -44,7 +44,7 @@ RSpec.describe 'Test wishlist requests', type: :request do
   context 'put /wishlist/:id' do
     it '200' do
       headers = { 'Content-Type' => 'application/json' }
-      client = Client.create!(id: 1, name: 'michel', email: 'xpto')
+      client = Client.create!(id: 1, name: 'michel', email: 'xpto', password_digest: '1234')
       wishlist = Wishlist.create!(client_id: 1, products: %w[1 2 3 4])
       wishlist_update = { 'products': %w[1 2 3 4 5] }
       put "/wishlists/#{wishlist.client_id}", params: wishlist_update.to_json, headers: headers
@@ -67,7 +67,7 @@ RSpec.describe 'Test wishlist requests', type: :request do
   context 'delete /wishlist/:id' do
     it '200' do
       headers = { 'Content-Type': 'application/json' }
-      client = Client.create!(id: 1, name: 'michel', email: 'xpto')
+      client = Client.create!(id: 1, name: 'michel', email: 'xpto', password_digest: '1234')
       wishlist = Wishlist.create!(client_id: 1, products: %w[1 2 3 4])
       delete "/wishlists/#{wishlist.client_id}", params: {}, headers: headers
 

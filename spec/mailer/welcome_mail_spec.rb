@@ -11,11 +11,11 @@ RSpec.describe 'sending an email' do
   before(:each) do
     Mail::TestMailer.deliveries.clear
 
-    client = Client.create!(id: 10, name: 'lehsim', email: 'xpssz')
+    client = Client.create!(id: 1, name: 'john', email: 'john_doe', password_digest: '1234')
     client.run_callbacks(:create)
   end
 
   it { is_expected.to have_sent_email } # passes if any email at all was sent
   it { is_expected.to have_sent_email.from('support@magamike.com') }
-  it { is_expected.to have_sent_email.to('xpssz') }
+  it { is_expected.to have_sent_email.to('john_doe') }
 end

@@ -2,10 +2,14 @@
 
 # Client model
 class Client < ApplicationRecord
+  has_secure_password
+
   before_save :downcase_email
   after_create :welcome_mail
-
   validates_uniqueness_of :email, case_sensitive: false
+
+  validates :password, length: { minimum: 6 }, allow_nil: true
+
   has_one :wishlist
 
   accepts_nested_attributes_for :wishlist, update_only: true, allow_destroy: true
@@ -28,7 +32,7 @@ class Client < ApplicationRecord
     name = self.name
     template = ERB.new(File.read('app/views/registration_mailer/welcome_mail.erb')).result(binding)
 
-    mail = Mail.deliver do
+    Mail.deliver do
       from 'support@magamike.com'
       to email
       subject 'Welcome to Magamike'
