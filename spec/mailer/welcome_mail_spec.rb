@@ -15,7 +15,7 @@ RSpec.describe 'sending an email' do
     client.run_callbacks(:create)
   end
 
-  it { is_expected.to have_sent_email } # passes if any email at all was sent
+  it { is_expected.to have_sent_email }
   it { is_expected.to have_sent_email.from('support@magamike.com') }
   it { is_expected.to have_sent_email.to('john_doe') }
 end
