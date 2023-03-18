@@ -5,7 +5,8 @@ class Client < ApplicationRecord
   has_secure_password
 
   before_save :downcase_email
-  after_create :welcome_mail
+  after_create :send_welcome_mail
+
   validates_uniqueness_of :email, case_sensitive: false
 
   validates :password, length: { minimum: 6 }, allow_nil: true
@@ -27,17 +28,7 @@ class Client < ApplicationRecord
     self.email = email.downcase
   end
 
-  def welcome_mail
-    email = self.email
-    name = self.name
-    template = ERB.new(File.read('app/views/registration_mailer/welcome_mail.erb')).result(binding)
-
-    Mail.deliver do
-      from 'support@magamike.com'
-      to email
-      subject 'Welcome to Magamike'
-      content_type 'text/html; charset=UTF-8'
-      body template
-    end
+  def send_welcome_mail
+    MailService.new(email: email, template: 'app/mailers/welcome_mail.html.erb', subject: 'Welcome to MagaMike').send_mail
   end
 end

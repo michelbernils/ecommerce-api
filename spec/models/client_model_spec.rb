@@ -7,6 +7,13 @@ require 'mail'
 
 context 'Client Requirementes' do
   let(:client) { Client.new(name: 'john doe', email: 'john.doe@gmail.com', password: '12345678') }
+  include Mail::Matchers
+
+  before(:each) do
+    Mail::TestMailer.deliveries.clear
+
+    client.run_callbacks(:create)
+  end
 
   describe 'Should have unique email and case sensitive' do 
     subject { client }
@@ -24,7 +31,7 @@ context 'Client Requirementes' do
     end
 
     it 'should authenticate a client with a valid password' do
-      expect(client.authenticate('12345678')).to eq(client)
+      expect(client.authenticate(client.password)).to eq(client)
     end
 
     it 'should not authenticate a user with an invalid password' do
@@ -34,7 +41,7 @@ context 'Client Requirementes' do
 
   describe 'send email' do
     it 'welcome_mail to send after creating a user' do
-      expect(client).to receive(:welcome_mail)
+      expect(client).to receive(:send_welcome_mail)
       client.run_callbacks(:create)
     end
   end
@@ -43,4 +50,8 @@ context 'Client Requirementes' do
     subject { client }
     it { should have_one(:wishlist).class_name('Wishlist') }
   end
+
+  it { is_expected.to have_sent_email }
+  it { is_expected.to have_sent_email.from('support@magamike.com') }
+  it { is_expected.to have_sent_email.to(client.email) }
 end
