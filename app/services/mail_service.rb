@@ -2,21 +2,23 @@
 
 # Mail Service class
 class MailService
-  attr_accessor :name, :email, :template
+  attr_accessor :name, :email, :template, :subject, :from
 
-  def initialize(email:, template:, subject:)
+  def initialize(email:, template:, subject:, from:)
     @email = email
     @template = template
     @subject = subject
+    @from = from
   end
 
   def send_mail
     email = self.email
     name = self.name
     template = self.template
+    from = self.from
 
     Mail.deliver do
-      from 'support@magamike.com'
+      from from
       to email
       subject subject
       content_type 'text/html; charset=UTF-8'
