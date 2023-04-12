@@ -18,6 +18,6 @@ RSpec.describe 'MailService class' do
     allow(mail_service).to receive(:send_mail).and_return(true)
     mail_service.send_mail
 
-    expect(mail_service).to have 
+    expect(mail_service).to have_received(:send_mail)
   end
 end
