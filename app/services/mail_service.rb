@@ -16,6 +16,7 @@ class MailService
     name = self.name
     template = self.template
     from = self.from
+    subject = self.subject
 
     Mail.deliver do
       from from

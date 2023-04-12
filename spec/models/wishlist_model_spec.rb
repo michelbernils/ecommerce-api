@@ -2,7 +2,6 @@
 
 require 'spec_helper'
 require 'rails_helper'
-require 'byebug'
 
 describe Wishlist, type: :model do  
   context 'Wishlist requirements' do

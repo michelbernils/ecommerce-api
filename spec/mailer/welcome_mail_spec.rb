@@ -2,7 +2,6 @@
 
 require 'spec_helper'
 require 'rails_helper'
-require 'byebug'
 require 'mail'
 
 RSpec.describe 'sending an email' do

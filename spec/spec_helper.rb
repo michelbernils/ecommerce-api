@@ -103,4 +103,17 @@ RSpec.configure do |config|
   Mail.defaults do
     delivery_method :test
   end
+
+
+
+RSpec.configure do |config|
+  # Configure Mail gem for testing
+  config.before(:each) do
+    Mail::TestMailer.deliveries.clear
+  end
+
+  config.after(:each) do
+    Mail::TestMailer.deliveries.clear
+  end
+end
 end

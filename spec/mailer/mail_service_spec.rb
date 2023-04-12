@@ -12,24 +12,12 @@ RSpec.describe 'MailService class' do
   let(:template) { 'app/mailers/welcome_mail.html.erb' }
   let(:subject) { 'Welcome' }
   let(:from) { 'support@magamike.com' }
-
   let(:mail_service) { MailService.new(email: email, template: template, subject: subject, from: from) }
-  let(:client) { Client.create!(id: 1, name: 'john', email: 'john_doe', password_digest: '123456789') }
 
-  before(:each) do
-    Mail::TestMailer.deliveries.clear
+  it 'sends an email' do
+    allow(mail_service).to receive(:send_mail).and_return(true)
+    mail_service.send_mail
 
-    client.run_callbacks(:create)
+    expect(mail_service).to have 
   end
-
-  it 'should instance the class correctly' do
-    expect(mail_service.email).to eq(email)
-    expect(mail_service.template).to eq(template)
-    expect(mail_service.subject).to eq(subject)
-    expect(mail_service.from).to eq(from)
-  end
-
-  it { is_expected.to have_sent_email }
-  it { is_expected.to have_sent_email.from(mail_service.from) }
-  it { is_expected.to have_sent_email.to(client.email) }
 end

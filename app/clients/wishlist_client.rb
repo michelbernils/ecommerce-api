@@ -1,5 +1,6 @@
-require 'byebug'
+# frozen_string_literal: true
 
+# Wishlist client class
 class WishlistClient
   attr_accessor :client
 

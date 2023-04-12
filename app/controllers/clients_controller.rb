@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require_relative '../clients/wishlist_client'
-require 'byebug'
 
 # Client Controller class
 class ClientsController < ApplicationController
