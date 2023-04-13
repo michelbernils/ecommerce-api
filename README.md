@@ -1,11 +1,11 @@
 # Wishlist
 
-This repository contains a Ruby on Rails application capable of creating a client and a wishlist for each client
+This repository contains a Ruby on Rails application capable of creating client and a wishlist for a e-commerce
 
 In this application you can:
 
 - Create/Update/Delete/Read Clients
-- Create one wishlists for the Client
+- Create one Wishlists for the Client
 
 ## How to run:
 
@@ -38,5 +38,7 @@ You just need to run ```rubocop```on terminal
 ## How to use
 
 Create client:
+
+
 
 
