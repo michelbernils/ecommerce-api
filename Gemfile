@@ -15,6 +15,10 @@ gem 'devise', '~> 4.8'
 gem 'puma', '~> 5.0'
 gem 'rexml', '~> 3.2', '>= 3.2.4'
 
+# Sidequik and Redir
+gem 'redis'
+gem 'sidekiq'
+
 gem 'byebug'
 
 

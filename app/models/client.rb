@@ -29,6 +29,6 @@ class Client < ApplicationRecord
   end
 
   def send_welcome_mail
-    MailService.new(email: email, template: 'app/mailers/welcome_mail.html.erb', subject: 'Welcome to MagaMike', from: 'support@magamike.com').send_mail
+    SendMailJob.perform_later(name: name, email: email, template: 'app/mailers/welcome_mail.html.erb', subject: 'Welcome to MagaMike', from: 'support@magamike.com')
   end
 end

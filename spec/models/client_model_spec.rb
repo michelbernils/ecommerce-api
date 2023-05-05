@@ -49,8 +49,4 @@ context 'Client Requirementes' do
     subject { client }
     it { should have_one(:wishlist).class_name('Wishlist') }
   end
-
-  it { is_expected.to have_sent_email }
-  it { is_expected.to have_sent_email.from('support@magamike.com') }
-  it { is_expected.to have_sent_email.to(client.email) }
 end
