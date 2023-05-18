@@ -1,6 +1,6 @@
----
-:concurrency: 5
-:queues:
-  - default
-  - critical
-  - low
+# sidekiq.yml
+
+development:
+  :url: https://localhost:6379/0
+  :size: 5
+  :pool_name: internal
