@@ -15,12 +15,14 @@ gem 'devise', '~> 4.8'
 gem 'puma', '~> 5.0'
 gem 'rexml', '~> 3.2', '>= 3.2.4'
 
-# Sidequik and Redir
+# Sidequik and Redis
 gem 'redis'
 gem 'sidekiq'
 
 gem 'byebug'
 
+# AWS SDK gem
+gem 'aws-sdk-s3', '~> 1'
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 # gem 'jbuilder"
