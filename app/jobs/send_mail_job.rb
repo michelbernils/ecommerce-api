@@ -3,7 +3,7 @@
 # SendMail Job
 class SendMailJob < ApplicationJob
   queue_as :default
-  
+
   def perform(name:, email:, template:, subject:, from:)
     Mail.deliver do
       from from

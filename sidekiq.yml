@@ -1,6 +1,6 @@
 # sidekiq.yml
 
 development:
-  :url: https://localhost:6379/0
   :size: 5
   :pool_name: internal
+  :url: redis://localhost:6379/0

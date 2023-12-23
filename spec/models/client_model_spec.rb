@@ -14,7 +14,7 @@ context 'Client Requirementes' do
     client.run_callbacks(:create)
   end
 
-  describe 'Should have unique email and case sensitive' do 
+  describe 'Should have unique email and case sensitive' do
     subject { client }
     it { should validate_uniqueness_of(:email).case_insensitive }
   end

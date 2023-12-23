@@ -2,7 +2,6 @@
 
 require 'spec_helper'
 require 'rails_helper'
-require 'byebug'
 require 'mail'
 
 RSpec.describe 'MailService class' do
@@ -13,7 +12,7 @@ RSpec.describe 'MailService class' do
   let(:name) { 'Michel' }
   let(:subject) { 'Welcome' }
   let(:from) { 'support@magamike.com' }
-  let(:mail_service) { MailService.new(email: email, template: template, subject: subject, from: from) }
+  let(:mail_service) { MailService.new(email:, template:, subject:, from:) }
 
   it 'sends an email' do
     allow(mail_service).to receive(:send_mail).and_return(true)
@@ -23,7 +22,7 @@ RSpec.describe 'MailService class' do
   end
 
   it 'send email using background job' do
-    SendMailJob.perform_now(name: name, email: email, template: template, subject: subject, from: from)
+    SendMailJob.perform_now(name:, email:, template:, subject:, from:)
 
     mail = ActionMailer::Base.deliveries.last
     expect(mail.to).to eq([email])

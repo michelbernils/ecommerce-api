@@ -1,4 +1,8 @@
+# frozen_string_literal: true
+
 source 'https://rubygems.org'
+gem 'dotenv-rails', groups: [:development, :test]
+
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '3.1.2'
@@ -8,12 +12,16 @@ gem 'rails', '~> 7.0.4'
 
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3', '~> 1.4'
-# Full-featured and flexible authentication solution 
+# Full-featured and flexible authentication solution
 gem 'devise', '~> 4.8'
+
+gem 'pg'
 
 # Use the Puma web server [https://github.com/puma/puma]
 gem 'puma', '~> 5.0'
 gem 'rexml', '~> 3.2', '>= 3.2.4'
+
+gem 'uuid', '~> 2.3', '>= 2.3.8'
 
 # Sidequik and Redis
 gem 'redis'
@@ -21,8 +29,11 @@ gem 'sidekiq'
 
 gem 'byebug'
 
+gem 'web-console'
+
 # AWS SDK gem
-gem 'aws-sdk-s3', '~> 1'
+gem 'aws-sdk-core', '~> 3.180', '>= 3.180.1'
+gem 'aws-sdk-s3', '~> 1.132'
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 # gem 'jbuilder"
@@ -55,8 +66,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 6.0.0'
   # pretty print Ruby objects to visualize their structure. Supports custom object formatting via plugins
   gem 'awesome_print', '~> 1.8'
-
-  gem 'dotenv-rails'
+  gem 'byebug'
 end
 
 group :test do

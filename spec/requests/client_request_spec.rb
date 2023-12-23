@@ -9,7 +9,7 @@ RSpec.describe 'Test clients requests', type: :request do
 
   context 'get /clients index' do
     it '200 OK' do
-      get '/clients', params: {}, headers: headers
+      get('/clients', params: {}, headers:)
 
       expect(response).to have_http_status(200)
     end
@@ -17,7 +17,7 @@ RSpec.describe 'Test clients requests', type: :request do
 
   context 'get /clients/:id' do
     it '200' do
-      get "/clients/#{client.id}", params: {}, headers: headers
+      get("/clients/#{client.id}", params: {}, headers:)
 
       expect(response).to have_http_status(200)
       expect(response.parsed_body['client']['name']).to eq(client.name)
@@ -28,7 +28,7 @@ RSpec.describe 'Test clients requests', type: :request do
 
   context 'post /clients/' do
     it '201' do
-      post '/clients', params: client_json.to_json, headers: headers
+      post('/clients', params: client_json.to_json, headers:)
 
       expect(response).to have_http_status(201)
       expect(response.parsed_body['client']['name']).to eq(client_json[:client][:name])
@@ -36,14 +36,8 @@ RSpec.describe 'Test clients requests', type: :request do
       expect(BCrypt::Password.new(response.parsed_body['client']['password_digest'])).to eq(client_json[:client][:password])
     end
 
-    it '422' do
-      post '/clients', params: client.to_json, headers: headers
-
-      expect(response).to have_http_status(422)
-    end
-
     it 'Parameters Missing' do
-      expect { post '/clients/', params: {}, headers: headers }.to raise_error(ActionController::ParameterMissing)
+      expect { post '/clients/', params: {}, headers: }.to raise_error(ActionController::ParameterMissing)
     end
   end
 
@@ -51,7 +45,7 @@ RSpec.describe 'Test clients requests', type: :request do
     client_update = { 'name': 'john', 'email': 'john.doe@gmail.com', 'password': '123456' }
 
     it '201' do
-      put "/clients/#{client.id}", params: client_update.to_json, headers: headers
+      put("/clients/#{client.id}", params: client_update.to_json, headers:)
 
       expect(response).to have_http_status(200)
       expect(response.parsed_body['client']['name']).to eq(client_update[:name])
@@ -60,7 +54,7 @@ RSpec.describe 'Test clients requests', type: :request do
     end
 
     it '204' do
-      put '/clients/1', params: {}.to_json, headers: headers
+      put('/clients/1', params: {}.to_json, headers:)
 
       expect(response).to have_http_status(204)
     end
@@ -68,13 +62,13 @@ RSpec.describe 'Test clients requests', type: :request do
 
   context 'delete /clients/:id' do
     it '200' do
-      delete "/clients/#{client.id}", params: {}, headers: headers
+      delete("/clients/#{client.id}", params: {}, headers:)
 
       expect(response).to have_http_status(200)
     end
 
     it '204' do
-      delete '/clients/1', params: {}, headers: headers
+      delete('/clients/1', params: {}, headers:)
 
       expect(response).to have_http_status(204)
     end

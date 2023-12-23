@@ -2,6 +2,7 @@
 
 # Wishlist model
 class Wishlist < ApplicationRecord
+  has_and_belongs_to_many :products
   belongs_to :client
   validates :client_id, uniqueness: true
   serialize :products, Array

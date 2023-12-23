@@ -3,7 +3,7 @@
 require 'spec_helper'
 require 'rails_helper'
 
-describe Wishlist, type: :model do  
+describe Wishlist, type: :model do
   context 'Wishlist requirements' do
     it 'Belongs to clients' do
       should belong_to(:client).class_name('Client')

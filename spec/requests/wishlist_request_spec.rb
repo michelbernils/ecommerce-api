@@ -14,11 +14,10 @@ RSpec.describe 'Test wishlist requests', type: :request do
     client.destroy
     client_post.destroy
   end
-  
-  
+
   context 'GET /wishlists index' do
     it '200' do
-      get '/wishlists', params: {}, headers: headers
+      get('/wishlists', params: {}, headers:)
 
       expect(response).to have_http_status(200)
     end
@@ -26,7 +25,7 @@ RSpec.describe 'Test wishlist requests', type: :request do
 
   context 'GET /wishlists/:id' do
     it '200' do
-      get "/wishlists/#{wishlist.id}", params: {}, headers: headers
+      get("/wishlists/#{wishlist.id}", params: {}, headers:)
 
       expect(response).to have_http_status(200)
     end
@@ -34,7 +33,7 @@ RSpec.describe 'Test wishlist requests', type: :request do
 
   context 'POST /wishlists' do
     it '201' do
-      post '/wishlists', params: wishlist_post.to_json, headers: headers
+      post('/wishlists', params: wishlist_post.to_json, headers:)
 
       expect(response).to have_http_status(201)
       expect(response.parsed_body['client_id']).to eq(wishlist_post[:wishlist][:client_id])
@@ -45,7 +44,7 @@ RSpec.describe 'Test wishlist requests', type: :request do
   context 'PUT /wishlists/:id' do
     it '200' do
       wishlist_update = { products: %w[1 2 3 4 5] }
-      put "/wishlists/#{wishlist.id}", params: wishlist_update.to_json, headers: headers
+      put("/wishlists/#{wishlist.id}", params: wishlist_update.to_json, headers:)
 
       expect(response).to have_http_status(200)
       expect(response.parsed_body['id']).to eq(wishlist.id)
@@ -53,7 +52,7 @@ RSpec.describe 'Test wishlist requests', type: :request do
     end
 
     it '204' do
-      put '/wishlists/2', params: {}.to_json, headers: headers
+      put('/wishlists/2', params: {}.to_json, headers:)
 
       expect(response).to have_http_status(204)
     end
@@ -61,13 +60,13 @@ RSpec.describe 'Test wishlist requests', type: :request do
 
   context 'DELETE /wishlists/:id' do
     it '200' do
-      delete "/wishlists/#{wishlist.id}", params: {}, headers: headers
+      delete("/wishlists/#{wishlist.id}", params: {}, headers:)
 
       expect(response).to have_http_status(200)
     end
 
     it '204' do
-      delete '/wishlists/2', params: {}.to_json, headers: headers
+      delete('/wishlists/2', params: {}.to_json, headers:)
 
       expect(response).to have_http_status(204)
     end

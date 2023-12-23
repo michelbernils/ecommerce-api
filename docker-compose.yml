@@ -1,0 +1,45 @@
+version: '3'
+services:
+  db:
+    image: nouchka/sqlite3:latest
+    volumes:
+      - /db/development.sqlite3
+  web:
+    build: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      - redis
+    environment:
+      - ${DATABASE_URL}
+    env_file:
+      - .env
+    stdin_open: true
+    tty: true
+    volumes:
+      - .:/app
+  redis:
+    image: redis
+    command: redis-server
+    ports:
+      - "${REDIS_PORT}:${REDIS_PORT}"
+  sidekiq:
+    build: .
+    depends_on:
+      - redis
+    command: bundle exec sidekiq -C sidekiq.yml
+    environment:
+      RAILS_ENV: ${ENV}
+    env_file:
+      - .env
+  mailcatcher:
+    container_name: mailcatcher
+    restart: on-failure:10
+    image: stpaquet/alpinemailcatcher:latest
+    environment:
+      - MAIL_LIMIT=70
+      - TIMEZONE=America/Los_Angeles
+    ports:
+      - "1080:1080"
+      - "1025:1025"
+

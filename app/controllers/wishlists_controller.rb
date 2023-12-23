@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# Wishlist controller class
+# Wishlists Controller class
 class WishlistsController < ApplicationController
   before_action :set_wishlist, only: %i[show update destroy]
 
@@ -16,6 +16,7 @@ class WishlistsController < ApplicationController
 
   def create
     @wishlist = Wishlist.new(wishlist_params)
+
     if @wishlist.save
       render json: @wishlist, status: :created, location: @wishlist
     else
@@ -24,17 +25,17 @@ class WishlistsController < ApplicationController
   end
 
   def update
-    if @wishlist.present?
-      @wishlist.update(wishlist_params)
-      render json: @wishlist, status: :ok
-    end
+    return unless @wishlist.present?
+
+    @wishlist.update(wishlist_params)
+    render json: @wishlist, status: :ok
   end
 
   def destroy
-    if @wishlist.present?
-      @wishlist.destroy
-      render json: @wishlist, status: :ok
-    end
+    return unless @wishlist.present?
+
+    @wishlist.destroy
+    render json: @wishlist, status: :ok
   end
 
   private

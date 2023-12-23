@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_11_24_215805) do
+ActiveRecord::Schema[7.0].define(version: 2023_06_19_101544) do
   create_table "clients", force: :cascade do |t|
     t.string "name"
     t.string "password_digest"
@@ -19,12 +19,23 @@ ActiveRecord::Schema[7.0].define(version: 2022_11_24_215805) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "products", force: :cascade do |t|
+    t.string "name"
+    t.string "image"
+    t.string "url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "wishlists", force: :cascade do |t|
+    t.integer "product_id", null: false
     t.string "products"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "client_id"
     t.index ["client_id"], name: "index_wishlists_on_client_id"
+    t.index ["product_id"], name: "index_wishlists_on_product_id"
   end
 
+  add_foreign_key "wishlists", "products"
 end

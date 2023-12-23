@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative '../clients/wishlist_client'
-
 # Client Controller class
 class ClientsController < ApplicationController
   before_action :set_client, only: %i[show update destroy]
@@ -31,17 +29,17 @@ class ClientsController < ApplicationController
   end
 
   def update
-    if @client.present?
-      @client.update(client_params)
-      render json: @client, status: :ok
-    end
+    return unless @client.present?
+
+    @client.update(client_params)
+    render json: @client, status: :ok
   end
 
   def destroy
-    if @client.present?
-      @client.destroy
-      render json: @client, status: :ok
-    end
+    return unless @client.present?
+
+    @client.destroy
+    render json: @client, status: :ok
   end
 
   private
