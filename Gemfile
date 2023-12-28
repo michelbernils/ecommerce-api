@@ -29,8 +29,6 @@ gem 'sidekiq'
 
 gem 'byebug'
 
-gem 'web-console'
-
 # AWS SDK gem
 gem 'aws-sdk-core', '~> 3.180', '>= 3.180.1'
 gem 'aws-sdk-s3', '~> 1.132'

@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe 'Test products requests', type: :request do
   let(:headers) { { 'Content-Type' => 'application/json'} }
   let(:product) { Product.create!(name: 'iphone', image: fixture_file_upload('spec/fixtures/c.png', 'image/png'), url: 'test') }
-  let(:product_json) { { "product": { "name": 'iphone', 'image': fixture_file_upload('spec/fixtures/c.png', 'image/png'), 'url': 'test' } } }
+  let(:product_json) { { "product": { "name": 'iphone', "image": fixture_file_upload('spec/fixtures/c.png', 'image/png'), "url": 'test'}}}
 
   context 'get /products index' do
     it '200 OK' do
@@ -22,7 +22,7 @@ RSpec.describe 'Test products requests', type: :request do
       parsed_response = JSON.parse(response.body)
       expect(response).to have_http_status(200)
       expect(parsed_response['name']).to eq(product.name)
-      expect(parsed_response['image']).to be_a(Rack::Test::UploadedFile)
+      expect(parsed_response['image']).to be_a(String)
       expect(parsed_response['url']).to eq(product.url)
     end
   end
@@ -38,18 +38,14 @@ RSpec.describe 'Test products requests', type: :request do
     end
 
     it 'Parameters Missing' do
-      post '/products/', params: {}.to_json, headers: headers
-
-      expect(response).to have_http_status(422)
-      expect(response.parsed_body['error']).to eq('Parameters missing')
+      expect { post '/products/', params: {}, headers: }.to raise_error(ActionController::ParameterMissing)
     end
   end
 
-
   context 'put /products/:id' do
-    product_update = { 'name': 'iphone 5s', 'image': 'iphone5s.jpg', url: '' }
-
     it '201' do
+      product_update = { "product": { "name": 'iphone', "image": fixture_file_upload('spec/fixtures/c.png', 'image/png'), "url": 'test'}}
+
       put("/products/#{product.id}", params: product_update.to_json, headers:)
 
       expect(response).to have_http_status(200)

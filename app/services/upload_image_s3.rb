@@ -12,6 +12,9 @@ class UploadImageS3
   end
 
   def upload
+    raise ArgumentError, 'tempfile is required' unless @tempfile
+    raise ArgumentError, 'file_name is required' unless @file_name
+
     s3 = Aws::S3::Resource.new(
       region: ENV['REGION_AWS'],
       credentials: Aws::Credentials.new(ENV['ACCESS_KEY_ID'], ENV['SECRET_ACCESS_KEY'])

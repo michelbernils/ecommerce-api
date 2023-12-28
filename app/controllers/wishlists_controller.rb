@@ -16,6 +16,7 @@ class WishlistsController < ApplicationController
 
   def create
     @wishlist = Wishlist.new(wishlist_params)
+    @wishlist.products << Product.find(params[:wishlist][:products]) if params[:wishlist][:products].present?
 
     if @wishlist.save
       render json: @wishlist, status: :created, location: @wishlist
@@ -26,8 +27,10 @@ class WishlistsController < ApplicationController
 
   def update
     return unless @wishlist.present?
-
+  
     @wishlist.update(wishlist_params)
+    @wishlist.products << Product.find(params[:wishlist][:products]) if params[:wishlist][:products].present?
+  
     render json: @wishlist, status: :ok
   end
 

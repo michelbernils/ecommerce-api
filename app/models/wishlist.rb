@@ -2,16 +2,15 @@
 
 # Wishlist model
 class Wishlist < ApplicationRecord
-  has_and_belongs_to_many :products
   belongs_to :client
-  validates :client_id, uniqueness: true
-  serialize :products, Array
+  has_many :wishlist_products, dependent: :destroy
+  has_many :products, through: :wishlist_products
 
-  validate :products_uniqueness
+  validate :product_ids_uniqueness
 
   private
 
-  def products_uniqueness
-    errors.add(:products, 'is not unique') unless products == products.uniq
+  def product_ids_uniqueness
+    errors.add(:product_ids, 'is not unique') unless product_ids == product_ids.uniq
   end
 end

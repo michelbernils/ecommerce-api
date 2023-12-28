@@ -19,8 +19,8 @@ Rails.application.configure do
   # Enable server timing
   config.server_timing = true
 
-  config.web_console.whitelisted_ips = '0.0.0.0/0'
-  config.web_console.permissions = %w[172.0.0.0/10]
+  # config.web_console.whitelisted_ips = '0.0.0.0/0'
+  # config.web_console.permissions = %w[172.0.0.0/10]
 
   # Enable/disable caching. By default caching is disabled.
   # Run rails dev:cache to toggle caching.

@@ -21,8 +21,12 @@ class ProductsController < ApplicationController
     @product = Product.new(product_params)
     img = params[:image]
 
-    upload_image_s3 = UploadImageS3.new(tempfile: img.tempfile, file_name: img.original_filename)
-    @product.url = upload_image_s3.upload
+    if img.present?
+      upload_image_s3 = UploadImageS3.new(tempfile: img.tempfile, file_name: img.original_filename)
+      @product.url = upload_image_s3.upload
+    else
+      render json: { error: 'Image is missing' }, status: :unprocessable_entity
+    end
 
     if @product.save
       render json: @product, status: :created, location: @product

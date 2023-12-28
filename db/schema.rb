@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_06_19_101544) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_26_194940) do
   create_table "clients", force: :cascade do |t|
     t.string "name"
     t.string "password_digest"
@@ -27,15 +27,24 @@ ActiveRecord::Schema[7.0].define(version: 2023_06_19_101544) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "wishlists", force: :cascade do |t|
+  create_table "wishlist_products", force: :cascade do |t|
+    t.integer "wishlist_id", null: false
     t.integer "product_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["product_id"], name: "index_wishlist_products_on_product_id"
+    t.index ["wishlist_id"], name: "index_wishlist_products_on_wishlist_id"
+  end
+
+  create_table "wishlists", force: :cascade do |t|
+    t.integer "client_id", null: false
     t.string "products"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.integer "client_id"
     t.index ["client_id"], name: "index_wishlists_on_client_id"
-    t.index ["product_id"], name: "index_wishlists_on_product_id"
   end
 
-  add_foreign_key "wishlists", "products"
+  add_foreign_key "wishlist_products", "products"
+  add_foreign_key "wishlist_products", "wishlists"
+  add_foreign_key "wishlists", "clients"
 end

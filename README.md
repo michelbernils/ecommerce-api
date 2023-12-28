@@ -56,7 +56,7 @@ Get a client:
 
 Create Wishlist:
 
-```{"wishlist": {"name": "michel", "email": "rails.michel@gmail.com", "password": "1234567890"}}```
+```{ "wishlist": { "client_id": 1, "products": 1 } }```
 
 Delete wishlist:
 ```http://127.0.0.1:3000/wishlists/{id}```
@@ -72,6 +72,8 @@ Create product:
 
 ```{"product": {"name": "iphone", "image": "iphone.png", "url": ""}}```
 
+ps: You should leave the url field empty, it will be overriten for the bucket url.
+
 Delete product:
 ```http://127.0.0.1:3000/products/{id}```
 
@@ -84,7 +86,7 @@ Get a product:
 # TODO:
 
 1. make byebug work (done)
-1. make the images, downloadables (done) -> issue was being caused by the ACL not being public.
-1. load the images url to my database (in progress)
-1. review all the tests cases
+1. make the images downloadables (done) -> issue was being caused by the ACL not being public.
+1. load the images url to my database (done)
+1. review all the tests cases (in progress)
 1. review the docker-compose and dockerfile
