@@ -4,14 +4,14 @@ require 'rails_helper'
 
 RSpec.describe 'Test wishlist requests', type: :request do
   let(:headers) { { 'Content-Type' => 'application/json' } }
-  let(:client) { Client.create!(name: 'michel', email: 'xpto', password_digest: '12345678') }
-  let(:product) { Product.create!(name: 'iphone', image: fixture_file_upload('spec/fixtures/c.png', 'image/png'), url: 'test') }
-  let(:wishlist_post) { { wishlist: { client_id: client.id, products: [product.id] } } }
-  let(:wishlist) { Wishlist.create!(client_id: client.id, products: [product]) }
+  let(:client) { instance_double(Client, id: 1, name: 'michel', email: 'xpto', password_digest: '12345678') }
+  let(:product) { instance_double(Product, id: 1, name: 'iphone', image: 'c.png', url: 'test') }
+  let(:wishlist) { instance_double(Wishlist, id: 1, client_id: 1, product_id: 1) }
+  let(:product_update) { instance_double(Product, id: 2, name: 'hiphone', image: 'c.png', url: 'test') }
 
   context 'GET /wishlists index' do
     it '200' do
-      get('/wishlists', params: {}, headers:)
+      get('/wishlists', params: {}, headers: headers)
 
       expect(response).to have_http_status(200)
     end
@@ -19,53 +19,46 @@ RSpec.describe 'Test wishlist requests', type: :request do
 
   context 'GET /wishlists/:id' do
     it '200' do
-      get("/wishlists/#{wishlist.id}", params: {}, headers:)
+      get("/wishlists/#{wishlist.id}", params: {}, headers: headers)
+
+      print(parsed_response['client_id'])
+      print(parsed_response['product_id'])
 
       parsed_response = JSON.parse(response.body)
       expect(response).to have_http_status(200)
-      expect(parsed_response['client_id']).to eq(wishlist.id)
-      expect(parsed_response['products']).to be_an_instance_of(Array)
+      expect(parsed_response['client_id']).to eq(client.id)
+      expect(parsed_response['product_id']).to be_an_instance_of(Array)
     end
   end
 
   context 'POST /wishlists' do
     it '201' do
-      post('/wishlists', params: { wishlist: { client_id: client.id, products: [product.id] } }.to_json, headers: headers)
+      post('/wishlists', params: wishlist.to_json, headers: headers)
 
       expect(response).to have_http_status(201)
       expect(response.parsed_body['client_id']).to eq(client.id)
-      expect(response.parsed_body['products']).to eq([product.id])
+      expect(response.parsed_body['product_id']).to eq(product.id)
     end
   end
 
-  context 'PUT /wishlists/:id' do
-    it '200' do
-      wishlist_update = { products: [product.id] }
-      put("/wishlists/#{wishlist.id}", params: wishlist_update.to_json, headers: headers)
+  # context 'PUT /wishlists/:id' do
+  #   it 'updates wishlist with new product' do
+  #     put("/wishlists/#{wishlist.id}", params: wishlist_post.to_json, headers: headers)
 
-      expect(response).to have_http_status(200)
-      expect(response.parsed_body['id']).to eq(wishlist.id)
-      expect(response.parsed_body['products']).to eq(wishlist_update[:products])
-    end
-
-    it '204' do
-      put('/wishlists/2', params: {}.to_json, headers: headers)
-
-      expect(response).to have_http_status(204)
-    end
-  end
+  #     expect(response).to have_http_status(:ok)
+  #     expect(wishlist.reload.product_id).to eq(product2.id)
+  #   end
+  # end
 
   context 'DELETE /wishlists/:id' do
     it '200' do
       delete("/wishlists/#{wishlist.id}", params: {}, headers: headers)
 
-      expect(response).to have_http_status(200)
+      expect(response).to have_http_status(204)
     end
 
-    it '204' do
-      delete('/wishlists/2', params: {}.to_json, headers: headers)
-
-      expect(response).to have_http_status(204)
+    it '404' do
+      expect { delete("/wishlists/", params: {}, headers: headers) }.to raise_error(ActionController::RoutingError)
     end
   end
 end

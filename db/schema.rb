@@ -38,13 +38,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_26_194940) do
 
   create_table "wishlists", force: :cascade do |t|
     t.integer "client_id", null: false
-    t.string "products"
+    t.integer "product_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["client_id"], name: "index_wishlists_on_client_id"
+    t.index ["product_id"], name: "index_wishlists_on_product_id"
   end
 
   add_foreign_key "wishlist_products", "products"
   add_foreign_key "wishlist_products", "wishlists"
   add_foreign_key "wishlists", "clients"
+  add_foreign_key "wishlists", "products"
 end

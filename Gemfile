@@ -69,6 +69,7 @@ end
 
 group :test do
   gem 'shoulda-matchers', '~> 5.0'
+  gem 'byebug'
 end
 
 group :development do

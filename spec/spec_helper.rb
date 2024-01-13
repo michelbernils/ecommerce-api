@@ -17,6 +17,10 @@
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 
 require 'mail'
+require 'rails_helper'
+require 'rack/test/uploaded_file'
+require 'action_dispatch/testing/test_process'
+
 
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate

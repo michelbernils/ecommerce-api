@@ -3,8 +3,8 @@
 class CreateWishlists < ActiveRecord::Migration[7.0]
   def change
     create_table :wishlists do |t|
-      t.references :client, null: false, foreign_key: true
-      t.string 'products', array: true
+      t.references :client, foreign_key: true, null: false
+      t.references :product, foreign_key: true, null: false
 
       t.timestamps
     end

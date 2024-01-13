@@ -15,7 +15,7 @@ In this application you can:
 ## How to run:
 
 - clone the repository.
-- ```sudo docker-compose up```.
+- ```sudo docker-compose up --build```.
 
 The server should be running on your ```localhost``` port ```3000```
 

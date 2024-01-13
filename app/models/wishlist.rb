@@ -3,14 +3,8 @@
 # Wishlist model
 class Wishlist < ApplicationRecord
   belongs_to :client
-  has_many :wishlist_products, dependent: :destroy
-  has_many :products, through: :wishlist_products
+  belongs_to :product
 
-  validate :product_ids_uniqueness
-
-  private
-
-  def product_ids_uniqueness
-    errors.add(:product_ids, 'is not unique') unless product_ids == product_ids.uniq
-  end
+  validates :client_id, presence: true
+  validates :product_id, presence: true
 end

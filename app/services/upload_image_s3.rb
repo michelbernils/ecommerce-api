@@ -26,7 +26,7 @@ class UploadImageS3
 
     s3_object = s3.bucket(bucket_name).object(object_key)
 
-    s3_object.upload_file(tempfile)  
+    s3_object.upload_file(tempfile)
 
     @url = "https://#{ENV['BUCKET_NAME']}.s3.amazonaws.com/#{object_key}"
   end
