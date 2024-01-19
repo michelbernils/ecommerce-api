@@ -4,8 +4,8 @@ require 'securerandom'
 require 'rails_helper'
 
 RSpec.describe UploadImageS3 do
-  let(:tempfile) { 'path/to/tempfile' }
-  let(:file_name) { 'example.jpg' }
+  let(:tempfile) { 'tempfile' }
+  let(:file_name) { 'c.png' }
 
   before do
     allow(SecureRandom).to receive(:uuid).and_return('random_uuid')
@@ -25,7 +25,7 @@ RSpec.describe UploadImageS3 do
       upload_image = UploadImageS3.new(tempfile: tempfile, file_name: file_name)
       upload_image.upload
 
-      expect(upload_image.url).to eq("https://#{ENV['BUCKET_NAME']}.s3.amazonaws.com/random_uuid_example.jpg")
+      expect(upload_image.url).to eq("https://#{ENV['BUCKET_NAME']}.s3.amazonaws.com/random_uuid_c.png")
     end
   end
 end
