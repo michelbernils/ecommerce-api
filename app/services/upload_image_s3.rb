@@ -12,9 +12,6 @@ class UploadImageS3
   end
 
   def upload
-    raise ArgumentError, 'tempfile is required' unless @tempfile
-    raise ArgumentError, 'file_name is required' unless @file_name
-
     s3 = Aws::S3::Resource.new(
       region: ENV['REGION_AWS'],
       credentials: Aws::Credentials.new(ENV['ACCESS_KEY_ID'], ENV['SECRET_ACCESS_KEY'])
@@ -22,11 +19,11 @@ class UploadImageS3
 
     bucket_name = ENV['BUCKET_NAME']
 
-    object_key = "#{SecureRandom.uuid}_#{file_name}"
+    object_key = "#{SecureRandom.uuid}_#{@file_name}"
 
     s3_object = s3.bucket(bucket_name).object(object_key)
 
-    s3_object.upload_file(tempfile)
+    s3_object.upload_file(@tempfile)
 
     @url = "https://#{ENV['BUCKET_NAME']}.s3.amazonaws.com/#{object_key}"
   end

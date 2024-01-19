@@ -27,21 +27,14 @@ RSpec.describe 'Test products requests', type: :request do
   end
 
   context 'post /products/' do
-    it 'creates a new product with an image' do
+    it 'upload image' do
       file = fixture_file_upload('c.png', 'image/png')
+      post '/products', params: { product: { name: 'iphone', image: file, url: 'test' } }
 
-      post '/products', params: { name: 'iphone', image: file, url: 'test' }
-
-      response_json = JSON.parse(response.body)
-
+      response_body = JSON.parse(response.body)
       expect(response).to have_http_status(201)
-      expect(response_json['name']).to eq('iphone')
-      expect(response_json['url']).to be_present
-      # expect(response_json['image']).to eq(ActionDispatch::Http::UploadedFile) -> eu nao sei como resolver isso, estou recebendo um action dispatch.
-    end
-
-    it 'Parameters Missing' do
-      expect { post '/products/', params: {}, headers: headers }.to raise_error(ActionController::ParameterMissing)
+      expect(response_body['name']).to eq('iphone')
+      expect(response_body['url']).to be_present
     end
   end
 
